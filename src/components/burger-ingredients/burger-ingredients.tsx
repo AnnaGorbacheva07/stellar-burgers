@@ -4,7 +4,6 @@ import { BurgerIngredientsUI } from '../ui/burger-ingredients';
 import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useSelector } from '../../services/store';
-import { getIngredientsState } from '../../services/slices/ingredientsSlice';
 
 export const BurgerIngredients: FC = () => {
   const { ingredients, isLoading, error } = useSelector(
