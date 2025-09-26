@@ -20,19 +20,22 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import {
   fetchUserProfile,
-  setAuthChecked
+  setUserChecked
 } from '../../services/slices/userSlice';
-
+type BackgroundLocationState = {
+  background?: Location;
+};
 const App = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigator = useNavigate();
-  const [state, setState] = useState({ background: null });
+  /*const [state, setState] = useState({ background: null });*/
+  const state = location.state as BackgroundLocationState | undefined;
 
   useEffect(() => {
     // Загрузка ингредиентов
     dispatch(fetchIngredients());
-    dispatch(fetchUserProfile()).finally(() => dispatch(setAuthChecked(true)));
+    dispatch(fetchUserProfile()).finally(() => dispatch(setUserChecked()));
   }, [dispatch]);
 
   // Функция закрытия модального окна

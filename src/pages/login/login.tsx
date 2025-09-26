@@ -20,7 +20,7 @@ export const Login: FC = () => {
           password
         })
       );
-      navigate('/profile', { replace: true });
+      /* navigate('/profile', { replace: true });*/
     } catch (err: unknown) {
       // Явно указываем тип unknown
       if (typeof err === 'string') {

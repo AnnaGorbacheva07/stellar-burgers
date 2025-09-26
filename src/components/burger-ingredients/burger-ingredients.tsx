@@ -4,11 +4,16 @@ import { BurgerIngredientsUI } from '../ui/burger-ingredients';
 import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useSelector } from '../../services/store';
+import {
+  selectIngredients,
+  selectIngredientsError,
+  selectIngredientsLoading
+} from '../../services/selectors/ingredients';
 
 export const BurgerIngredients: FC = () => {
-  const { ingredients, isLoading, error } = useSelector(
-    (state) => state.ingredients
-  );
+  const ingredients = useSelector(selectIngredients);
+  const isLoading = useSelector(selectIngredientsLoading);
+  const error = useSelector(selectIngredientsError);
   if (!ingredients || ingredients.length === 0) {
     return <div>Ингредиенты не загружены</div>;
   }

@@ -3,11 +3,12 @@ import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from '../../services/store';
 import { TUser } from '@utils-types';
 import { updateUser } from '../../services/slices/userSlice';
+import { selectUser } from '../../services/selectors/user';
 
 export const Profile: FC = () => {
   /** TODO: взять переменную из стора */
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.user as TUser);
+  const user = useSelector(selectUser) || { name: '', email: '' };
 
   const [formValue, setFormValue] = useState({
     name: user.name,

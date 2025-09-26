@@ -39,9 +39,22 @@ export const burgerConstructorSlice = createSlice({
     addIngredient: (state, action: PayloadAction<TConstructorIngredient>) => {
       state.constructorItems.ingredients.push(action.payload);
     },*/
+    /*
     addIngredient: (state, action: PayloadAction<TConstructorIngredient>) => {
       const ingredientWithUuid = { ...action.payload, id: uuidv4() };
       state.constructorItems.ingredients.push(ingredientWithUuid);
+    },*/
+    // Используем prepare для генерации UUID
+    addIngredient: {
+      reducer: (state, action: PayloadAction<TConstructorIngredient>) => {
+        state.constructorItems.ingredients.push(action.payload);
+      },
+      prepare(ingredient: TConstructorIngredient) {
+        const ingredientWithUuid = { ...ingredient, id: uuidv4() };
+        return {
+          payload: ingredientWithUuid
+        };
+      }
     },
     //удаляет ингредиент по его id
     removeIngredient: (state, action: PayloadAction<string>) => {

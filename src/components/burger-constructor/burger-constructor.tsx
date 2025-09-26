@@ -5,19 +5,20 @@ import { RootState, useDispatch, useSelector } from '../../services/store';
 import { clearOrder, createOrder } from '../../services/slices/orderSlice';
 import { useNavigate } from 'react-router-dom';
 import { clearConstructor } from '../../services/slices/burgerConstructorSlice';
+import { selectConstructorItems } from '../../services/selectors/burgerConstructor';
+import { selectOrdersState } from '../../services/selectors/order';
+import { selectUserState } from '../../services/selectors/user';
 
 export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // Получаем данные из стора
-  const { constructorItems, orderRequest } = useSelector(
-    (state) => state.burgerConstructor
-  );
-
-  const orderModalData = useSelector((state) => state.orders.orderData);
+  const { constructorItems } = useSelector(selectConstructorItems);
+  const { orderRequest, orderData: orderModalData } =
+    useSelector(selectOrdersState);
   /*const user = useSelector((state: RootState) => state.user);*/
-  const { isAuthenticated } = useSelector((state) => state.user);
+  const { isAuthenticated } = useSelector(selectUserState);
 
   const onOrderClick = () => {
     // Если не авторизован — отправка на страницу логина

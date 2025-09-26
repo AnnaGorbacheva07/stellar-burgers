@@ -15,6 +15,7 @@ export type UserState = {
   user: TUser | null;
   isLoading: boolean;
   error: string | null;
+  isUserChecked: boolean;
   isAuthenticated: boolean;
   accessToken: string | null;
   refreshToken: string | null;
@@ -24,6 +25,7 @@ const initialState: UserState = {
   user: null,
   isLoading: false,
   error: null,
+  isUserChecked: false,
   isAuthenticated: false,
   accessToken: null,
   refreshToken: null
@@ -76,8 +78,8 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setAuthChecked(state, action: PayloadAction<boolean>) {
-      state.isAuthenticated = action.payload;
+    setUserChecked(state) {
+      state.isUserChecked = true;
     }
   },
   extraReducers: (builder) => {
@@ -144,5 +146,5 @@ export const userSlice = createSlice({
   }
 });
 
-export const { setAuthChecked } = userSlice.actions;
+export const { setUserChecked } = userSlice.actions;
 export default userSlice.reducer;

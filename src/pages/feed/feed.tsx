@@ -5,12 +5,18 @@ import { FC, useEffect } from 'react';
 import { RootState, useDispatch, useSelector } from '../../services/store';
 import { fetchFeed } from '../../services/slices/feedSlice';
 
+import {
+  selectError,
+  selectFeed,
+  selectFeedsLoading,
+  selectOrders
+} from '../../services/selectors/feed';
 export const Feed: FC = () => {
   const dispatch = useDispatch();
-  const feed = useSelector((state: RootState) => state.feeds.feed);
-  const orders = useSelector((state: RootState) => state.feeds.orders);
-  const isLoading = useSelector((state: RootState) => state.feeds.isLoading);
-  const error = useSelector((state: RootState) => state.feeds.error);
+  const feed = useSelector(selectFeed);
+  const orders = useSelector(selectOrders);
+  const isLoading = useSelector(selectFeedsLoading);
+  const error = useSelector(selectError);
 
   useEffect(() => {
     dispatch(fetchFeed());
