@@ -1,5 +1,3 @@
-// Импортируем Cypress
-import Cypress from 'cypress';
 // Задаем базовый URL API
 const BASE_URL = 'https://norma.nomoreparties.space/api';
 // Функция для добавления ингредиента в конструктор
@@ -157,26 +155,23 @@ describe('Страница конструктора бургера', () => {
     cy.contains('button', 'Оформить заказ').click();
 
     // Ждем завершения создания заказа
-    cy.wait('@createOrder').then(
+    /* cy.wait('@createOrder').then(
       ({ request, response }: { request: any; response: any }) => {
         // Проверяем тело запроса
         const body = request.body as { ingredients: string[] };
-        expect(body.ingredients).to.have.length(4);
-        
-    /*cy.wait('@createOrder').then((interception: Cypress.Interception) => {
-      const { request, response } = interception;
-      // Проверяем тело запроса
-      const body = request.body as { ingredients: string[] };
-      expect(body.ingredients).to.have.length(4);*/
+        expect(body.ingredients).to.have.length(4);*/
 
-        // Проверяем ответ сервера
-        expect(response?.statusCode).to.eq(200);
-        const orderBody = response?.body as
-          | { order: { number: number } }
-          | undefined;
-        expect(orderBody?.order.number).to.eq(91202);
-      }
-    );
+    cy.wait('@createOrder').then(({ request, response }) => {
+      const body = request.body as { ingredients: string[] };
+      expect(body.ingredients).to.have.length(4);
+
+      // Проверяем ответ сервера
+      expect(response?.statusCode).to.eq(200);
+      const orderBody = response?.body as
+        | { order: { number: number } }
+        | undefined;
+      expect(orderBody?.order.number).to.eq(91202);
+    });
 
     // Проверяем отображение номера заказа
     cy.get('[data-cy=modal]').should('be.visible');
