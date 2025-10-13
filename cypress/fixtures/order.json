@@ -1,0 +1,13 @@
+{
+  "success": true,
+  "name": "Краторный space люминесцентный бургер",
+  "order": {
+    "_id": "order-1",
+    "status": "done",
+    "name": "Краторный space люминесцентный бургер",
+    "createdAt": "2025-10-13T08:52:41.079Z",
+    "updatedAt": "2025-10-13T08:52:47.304Z",
+    "number": 91202,
+    "ingredients": ["bun-1", "main-2", "sauce-1"]
+  }
+}
