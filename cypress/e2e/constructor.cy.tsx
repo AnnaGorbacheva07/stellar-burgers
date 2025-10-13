@@ -75,7 +75,7 @@ describe('Страница конструктора бургера', () => {
   it('добавляет булку и начинку в конструктор', () => {
     // Добавляем ингредиенты
     addIngredientToConstructor('Краторная булка');
-    addIngredientToConstructor('Мясо бессмертных моллюсков');
+    addIngredientToConstructor('Филе Люминесцентного тетраодонтимформа');
 
     // Проверяем содержимое конструктора
     cy.get('[data-cy=burger-constructor]').should(
@@ -85,7 +85,7 @@ describe('Страница конструктора бургера', () => {
     cy.get('[data-cy=constructor-item]')
       .should('have.length', 1)
       .first()
-      .should('contain.text', 'Мясо бессмертных моллюсков');
+      .should('contain.text', 'Филе Люминесцентного тетраодонтимформа');
     cy.get('[data-cy=burger-constructor]').should(
       'contain.text',
       'Краторная булка (низ)'
@@ -114,14 +114,17 @@ describe('Страница конструктора бургера', () => {
     cy.get('[data-cy=ingredient-card]').should('have.length.at.least', 1);
 
     // Открываем модальное окно другого ингредиента
-    cy.contains('[data-cy=ingredient-card]', 'Мясо бессмертных моллюсков')
+    cy.contains(
+      '[data-cy=ingredient-card]',
+      'Филе Люминесцентного тетраодонтимформа'
+    )
       .find('[data-cy=ingredient-link]')
       .click();
 
     // Проверяем отображение модалки
     cy.get('[data-cy=modal]')
       .should('be.visible')
-      .and('contain.text', 'Мясо бессмертных моллюсков');
+      .and('contain.text', 'Филе Люминесцентного тетраодонтимформа');
 
     // Закрываем модалку через оверлей
     cy.get('[data-cy=modal-overlay]').click({ force: true });
@@ -147,38 +150,37 @@ describe('Страница конструктора бургера', () => {
   it('создает заказ и очищает конструктор после закрытия модалки', () => {
     // Добавляем ингредиенты в конструктор
     addIngredientToConstructor('Краторная булка');
-    addIngredientToConstructor('Мясо бессмертных моллюсков');
-    addIngredientToConstructor('Соус с шипами антории');
+    addIngredientToConstructor('Филе Люминесцентного тетраодонтимформа');
+    addIngredientToConstructor('Соус традиционный галактический');
 
     // Оформляем заказ
     cy.contains('button', 'Оформить заказ').click();
 
-    // Ждем завершения создания заказа
     // Ждем завершения создания заказа
     cy.wait('@createOrder').then(
       ({ request, response }: { request: any; response: any }) => {
         // Проверяем тело запроса
         const body = request.body as { ingredients: string[] };
         expect(body.ingredients).to.have.length(4);
-
-        /*cy.wait('@createOrder').then((interception: any) => {
-  const { request, response } = interception;
-  // Проверяем тело запроса
-  const body = request.body as { ingredients: string[] };
-  expect(body.ingredients).to.have.length(4);*/
+        
+    /*cy.wait('@createOrder').then((interception: Cypress.Interception) => {
+      const { request, response } = interception;
+      // Проверяем тело запроса
+      const body = request.body as { ingredients: string[] };
+      expect(body.ingredients).to.have.length(4);*/
 
         // Проверяем ответ сервера
         expect(response?.statusCode).to.eq(200);
         const orderBody = response?.body as
           | { order: { number: number } }
           | undefined;
-        expect(orderBody?.order.number).to.eq(445533);
+        expect(orderBody?.order.number).to.eq(91202);
       }
     );
 
     // Проверяем отображение номера заказа
     cy.get('[data-cy=modal]').should('be.visible');
-    cy.get('[data-cy=order-number]').should('have.text', '445533');
+    cy.get('[data-cy=order-number]').should('have.text', '91202');
 
     // Закрываем модалку с номером заказа
     cy.get('[data-cy=modal-close]').click();
